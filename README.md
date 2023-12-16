@@ -64,6 +64,21 @@ autoreconf
 make && make tests
 ```
 
+Install OpenSSL
+```
+sudo apt instal libssl-dev
+```
+
+To build with debug prints on
+```
+./configure --with-audit=debug
+```
+
+Connect to server and filter key using aes256-ctr algorithm
+```
+./ssh -vvv  -c aes256-ctr  alek@45.135.165.22 2>&1 | grep 'key\[[0-9]\+\]:'
+```
+
 ### Build-time Customisation
 
 There are many build-time customisation options available. All Autoconf destination path flags (e.g. ``--prefix``) are supported (and are usually required if you want to install OpenSSH).
