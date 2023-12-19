@@ -71,7 +71,7 @@ sudo apt instal libssl-dev
 
 To build with debug prints on
 ```
-./configure --with-audit=debug
+./configure --without-zlib --with-audit=debug
 ```
 
 Connect to server and filter key using aes256-ctr algorithm

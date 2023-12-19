@@ -26,7 +26,7 @@ PROGDIR=$(cd $_tdir && pwd)
 CSIH_SCRIPT=/usr/share/csih/cygwin-service-installation-helper.sh
 
 # Subdirectory where the new package is being installed
-PREFIX=/usr
+PREFIX=/usr/qssh
 
 # Directory where the config files are stored
 SYSCONFDIR=/etc
