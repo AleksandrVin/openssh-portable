@@ -4,7 +4,7 @@ set -e
 
 autoreconf
 
-./configure --without-zlib --with-audit=debug
+./configure --without-zlib --with-audit=debug --prefix=/usr/qssh 
 
 make
 

@@ -10,7 +10,7 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-#Port 22
+Port 1305
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -38,7 +38,7 @@
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
-AuthorizedKeysFile	.ssh/authorized_keys
+AuthorizedKeysFile	.qssh/authorized_keys
 
 #AuthorizedPrincipalsFile none
 
@@ -96,7 +96,7 @@ AuthorizedKeysFile	.ssh/authorized_keys
 #ClientAliveInterval 0
 #ClientAliveCountMax 3
 #UseDNS no
-#PidFile /var/run/sshd.pid
+PidFile /var/run/qsshd.pid
 #MaxStartups 10:30:100
 #PermitTunnel no
 #ChrootDirectory none
