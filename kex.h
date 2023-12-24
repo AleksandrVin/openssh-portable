@@ -259,6 +259,7 @@ int	kexc25519_shared_key_ext(const u_char key[CURVE25519_SIZE],
 
 #if defined(DEBUG_KEX) || defined(DEBUG_KEXDH) || defined(DEBUG_KEXECDH)
 void	dump_digest(const char *, const u_char *, int);
+void    dump_digest_file(const char *, const u_char *, int, FILE *);
 #endif
 
 #if !defined(WITH_OPENSSL) || !defined(OPENSSL_HAS_ECC)

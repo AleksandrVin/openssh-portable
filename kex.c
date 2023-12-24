@@ -608,6 +608,7 @@ kex_input_ext_info(int type, u_int32_t seq, struct ssh *ssh)
 
 void debug_print_key(struct ssh *ssh)
 {
+#ifdef DEBUG_KEX
 	if(ssh != NULL)
 		debug("ssh is not null");
 	else
@@ -622,12 +623,27 @@ void debug_print_key(struct ssh *ssh)
 		debug("ssh->kex->newkeys[MODE_IN]->enc.key is null");
 
 	int key_len = ssh->kex->newkeys[MODE_IN]->enc.key_len;
-	debug("key len: %d", key_len);
+	// debug("key len: %d", key_len);
 	
-	// print key byte by byte
-	for (int i = 0; i < key_len; i++) {
-		debug("key[%d]: %x", i, ssh->kex->newkeys[MODE_IN]->enc.key[i]);
-	}
+	// // print key byte by byte
+	// for (int i = 0; i < key_len; i++) {
+	// 	debug("key[%d]: %x", i, ssh->kex->newkeys[MODE_IN]->enc.key[i]);
+	// }
+
+	// file descriptor for keys logs in append mode write only
+	FILE * file = fopen("/tmp/kex_keys.txt", "a");
+	if(file == NULL)
+		debug("file is null");
+	else
+		debug("file is not null");
+
+	fprintf(file, "\n\tkey type: %s\n", ssh->kex->newkeys[MODE_IN]->enc.name);
+	fprintf(file, "\tkey len bytes: %d\n", key_len);
+	fprintf(file, "\tkey len bits: %d\n", key_len * 8);
+	dump_digest_file("\tkex key", ssh->kex->newkeys[MODE_IN]->enc.key, key_len, file);
+
+	fclose(file);
+#endif 	
 }
 
 static int
@@ -1292,7 +1308,15 @@ dump_digest(const char *msg, const u_char *digest, int len)
 	fprintf(stderr, "%s\n", msg);
 	sshbuf_dump_data(digest, len, stderr);
 }
+// implemtation of dump_digest with output to users file descriptor
+void
+dump_digest_file(const char *msg, const u_char *digest, int len, FILE * file)
+{
+	fprintf(file, "%s\n", msg);
+	sshbuf_dump_data(digest, len, file);
+}
 #endif
+
 
 /*
  * Send a plaintext error message to the peer, suffixed by \r\n.
