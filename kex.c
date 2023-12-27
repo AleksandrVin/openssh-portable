@@ -606,7 +606,7 @@ kex_input_ext_info(int type, u_int32_t seq, struct ssh *ssh)
 	return sshpkt_get_end(ssh);
 }
 
-void debug_print_key(struct ssh *ssh)
+void kex_debug_print_key(struct ssh *ssh)
 {
 #ifdef DEBUG_KEX
 	if(ssh != NULL)
@@ -623,12 +623,6 @@ void debug_print_key(struct ssh *ssh)
 		debug("ssh->kex->newkeys[MODE_IN]->enc.key is null");
 
 	int key_len = ssh->kex->newkeys[MODE_IN]->enc.key_len;
-	// debug("key len: %d", key_len);
-	
-	// // print key byte by byte
-	// for (int i = 0; i < key_len; i++) {
-	// 	debug("key[%d]: %x", i, ssh->kex->newkeys[MODE_IN]->enc.key[i]);
-	// }
 
 	// file descriptor for keys logs in append mode write only
 	FILE * file = fopen("/tmp/kex_keys.txt", "a");
@@ -656,7 +650,7 @@ kex_input_newkeys(int type, u_int32_t seq, struct ssh *ssh)
 	ssh_dispatch_set(ssh, SSH2_MSG_NEWKEYS, &kex_protocol_error);
 	ssh_dispatch_set(ssh, SSH2_MSG_KEXINIT, &kex_input_kexinit);
 
-	debug_print_key(ssh);
+	kex_debug_print_key(ssh);
 
 	if ((r = sshpkt_get_end(ssh)) != 0)
 		return r;
